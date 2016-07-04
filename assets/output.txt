@@ -1,0 +1,4 @@
+Identische Zeilen: 1
+Gelöschte Zeilen: 2
+Neue Zeilen: 3
+Geänderte Zeilen: 5

@@ -1,0 +1,7 @@
+<struct>
+	<info type="TXT" delimeter=";"/>
+	<field name="id" key="primary"/>
+	<field name="vorname"/>
+	<field name="nachname"/>
+	<field name="geschlecht"/>
+</struct>

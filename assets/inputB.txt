@@ -1,0 +1,5 @@
+﻿Donald#Trump#user1#weiblich#
+Daisy#Duck#user2#weiblich#
+Tick#Duck#user3#männlich#
+Track#Ente#user5#männlich#
+Duffy#Duck#user6#männlich#
