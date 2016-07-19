@@ -7,7 +7,7 @@ import java.net.MalformedURLException;
 public class Reporta {
 
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
     private static final boolean GUI = true;
 
     private static final String DEFAULT_LOCATION = "./assets";
@@ -48,6 +48,8 @@ public class Reporta {
     }
 
     private static void start_wo_gui(){
+        
+        
 
     }
 

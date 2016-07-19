@@ -3,6 +3,7 @@ package de.fi.reporta.xml;
 
 public class Config {
 
+
     private String delimeter;
     private String doctype;
 
@@ -12,7 +13,11 @@ public class Config {
     }
 
     public String getDelimeter() {
-        return delimeter;
+        return this.delimeter;
+    }
+    
+    public String getDoctype(){
+        return this.doctype;
     }
 
     public void setDelimeter(String delimeter) {

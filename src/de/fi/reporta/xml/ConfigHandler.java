@@ -13,9 +13,19 @@ public class ConfigHandler extends DefaultHandler{
     }
 
     public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+        String doctype;
+        String delimeter;
+        
+        
         System.out.println("Start-Tag: " + qName);
         for (int i = 0; i< attributes.getLength(); i++){
             System.out.println("Attribut: " + attributes.getQName(i) + " = " + attributes.getValue(i));
+            
+            
+            if (attributes.getQName(i).equalsIgnoreCase("type")){
+                //TODO add Delimeter and Type
+            }
+            
         }
     }
 
