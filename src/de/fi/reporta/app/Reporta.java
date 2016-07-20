@@ -23,6 +23,7 @@ public class Reporta {
 
         if (DEBUG){
             System.out.println("Start in debug mode");
+            start_wo_gui();
         }else if (GUI){
             System.out.println("Start with user interface");
             start_w_gui();
