@@ -1,16 +1,18 @@
-package de.fi.reporta.xml;
+package de.fi.reporta.files;
 
 
-public class Config {
+public class ConfigDocument {
 
 
     private String delimeter;
     private String doctype;
 
-    public void addConfig(String doctype, String delimeter){
+    
+    public ConfigDocument(String delimeter, String doctype) {
         this.doctype = doctype;
         this.delimeter = delimeter;
     }
+    
 
     public String getDelimeter() {
         return this.delimeter;
