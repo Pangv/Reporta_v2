@@ -1,5 +1,9 @@
 package de.fi.reporta.xml;
 
+
+import java.util.HashMap;
+import java.util.Map;
+
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
@@ -8,6 +12,22 @@ public class ConfigHandler extends DefaultHandler {
 
     private String doctype;
     private String delimeter;
+    
+    private Map<Integer, String> attributes = new HashMap<Integer, String>();
+    
+    public ConfigHandler(){
+        // empty
+    }
+    
+    public ConfigHandler(Map<Integer, String> attributes){
+        this.attributes = attributes;
+    }
+    
+    
+    public Map<Integer, String> getAttributes(){
+        return this.attributes;
+    }
+    
 
 
     public void startDocument() throws SAXException {

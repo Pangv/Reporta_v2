@@ -1,6 +1,10 @@
 package de.fi.reporta.app;
 
 import javax.swing.*;
+
+import de.fi.reporta.files.Document;
+import de.fi.reporta.xml.CallSAX;
+
 import java.io.File;
 import java.net.MalformedURLException;
 
@@ -14,12 +18,11 @@ public class Reporta {
 
 
     private static JFileChooser jFileChooser = new JFileChooser("Test");
-
-
-
-
+    
+    private static Document doc1 = new Document();
+    private static Document doc2 = new Document();
+    
     public static void main(String[] args){
-
 
         if (DEBUG){
             System.out.println("Start in debug mode");
@@ -31,8 +34,6 @@ public class Reporta {
             System.out.println("Start without user interface");
             start_wo_gui();
         }
-
-
 
 
     }
@@ -50,7 +51,8 @@ public class Reporta {
 
     private static void start_wo_gui(){
         
-        
+        doc1.buildConfiguration();
+        doc1.buildRaw();
 
     }
 
