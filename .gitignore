@@ -112,3 +112,6 @@ local.properties
 .gitignore
 .idea/
 Reporta_v2.iml
+/.classpath
+/.project
+/.settings/

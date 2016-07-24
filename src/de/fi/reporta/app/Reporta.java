@@ -1,11 +1,9 @@
 package de.fi.reporta.app;
 
-import javax.swing.*;
-
 import de.fi.reporta.files.Document;
-import de.fi.reporta.xml.CallSAX;
 
-import java.io.File;
+import javax.swing.*;
+import java.io.*;
 import java.net.MalformedURLException;
 
 public class Reporta {
@@ -18,6 +16,7 @@ public class Reporta {
 
 
     private static JFileChooser jFileChooser = new JFileChooser("Test");
+    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     
     private static Document doc1 = new Document();
     private static Document doc2 = new Document();
@@ -50,9 +49,16 @@ public class Reporta {
     }
 
     private static void start_wo_gui(){
-        
-        doc1.buildConfiguration();
-        doc1.buildRaw();
+
+
+        System.out.print("Call the first configuration file: ");
+       try {
+
+           doc1.buildConfiguration(br.readLine());
+         //  doc1.buildRaw(br.readLine());
+       } catch (IOException e){
+           e.printStackTrace();
+       }
 
     }
 

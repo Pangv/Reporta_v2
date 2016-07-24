@@ -7,24 +7,16 @@ import java.io.InputStreamReader;
 
 public class Document {
 
-    private final String FILE_SEPERATOR = File.separator;
+    private final String FILE_SEPARATOR = File.separator;
     // ///////////////////////////////////////////////////
 
     private ConfigDocument configuration;
     private RawDocument rawDocument;
 
-    private BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    public void buildConfiguration(String filename) {
 
-    public void buildConfiguration() {
+        configuration = new ConfigDocument(filename);
 
-        try {
-            System.out.println("xml_Name: ");
-            String filename = br.readLine();
-            configuration = new ConfigDocument(filename);
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
     }
 
     public void buildRaw() {

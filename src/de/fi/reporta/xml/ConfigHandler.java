@@ -10,25 +10,32 @@ import org.xml.sax.helpers.DefaultHandler;
 
 public class ConfigHandler extends DefaultHandler {
 
-    private String doctype;
-    private String delimeter;
-    
+    private String[] mainAttributes = new String[2];
     private Map<Integer, String> attributes = new HashMap<Integer, String>();
-    
-    public ConfigHandler(){
+
+    public ConfigHandler() {
         // empty
     }
-    
-    public ConfigHandler(Map<Integer, String> attributes){
+
+    public ConfigHandler(Map<Integer, String> attributes) {
         this.attributes = attributes;
     }
-    
-    
-    public Map<Integer, String> getAttributes(){
+
+
+    public String[] getMainAttributes() {
+        return this.mainAttributes;
+    }
+
+    public Map<Integer, String> getAttributes() {
         return this.attributes;
     }
-    
 
+
+
+
+    /*
+    Basic SAX handling here:
+     */
 
     public void startDocument() throws SAXException {
         System.out.println("Dokumentenstart!");
@@ -41,12 +48,11 @@ public class ConfigHandler extends DefaultHandler {
             System.out.println("Attribut: " + attributes.getQName(i) + " = " + attributes.getValue(i));
 
             if (attributes.getQName(i).equalsIgnoreCase("type")) {
-                doctype = attributes.getValue(i);
+                this.mainAttributes[0] = attributes.getValue(i);
             }
             if (attributes.getQName(i).equalsIgnoreCase("delimeter")) {
-                delimeter = attributes.getValue(i);
+                this.mainAttributes[1] = attributes.getValue(i);
             }
-
         }
 
     }

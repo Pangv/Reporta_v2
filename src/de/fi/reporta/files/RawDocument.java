@@ -7,14 +7,18 @@ import java.io.IOException;
 
 public class RawDocument {
 
-    private final String FILE_SEPERATOR = File.separator;
+    private final String FILE_SEPARATOR = File.separator;
     private String filename;
     private File rawFile;
 
     private String line;
 
+
+
+
+
     public void readRawDocument() {
-        rawFile = new File("assets" + FILE_SEPERATOR + filename);
+        rawFile = new File("assets" + FILE_SEPARATOR + filename);
 
         if (!rawFile.exists()) {
             System.err.println("The file with associated with the name " + filename + " does not exist.");
@@ -35,7 +39,7 @@ public class RawDocument {
     }
 
     public void setFilename(String filename) {
-        this.filename = "assets" + FILE_SEPERATOR + filename;
+        this.filename = "assets" + FILE_SEPARATOR + filename;
     }
 
 }

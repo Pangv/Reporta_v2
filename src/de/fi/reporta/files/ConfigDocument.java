@@ -12,25 +12,28 @@ public class ConfigDocument {
     private String filename;
     private String delimeter;
     private String doctype;
+
+
+
     
     private Map<Integer, String> attributes = new HashMap<Integer, String>(); // any number of attributes in an input xml
     private CallSAX saxParser;
     
     
     
-    public void setAttributes(Map<Integer, String> attributes){
+    public void introduceAttributes(Map<Integer, String> attributes){
+        // TODO: remove duplicate parser-creation only one is needed
+        saxParser = new CallSAX();
         saxParser.createSAXParser();
-        saxParser.setFilename(this.filename);
-        saxParser.parseXMLDocument();
-        
-        
-      
-        
+
+
+
+        saxParser.parseXMLDocument(this.filename);
     }
     
     public ConfigDocument(String filename) {
         this.filename = filename;
-        setAttributes(this.attributes);
+        introduceAttributes(this.attributes);
     }
     
 

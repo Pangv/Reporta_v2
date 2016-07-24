@@ -14,23 +14,9 @@ public class CallSAX {
 
     private final String FILE_SEPERATOR = File.separator;
 
-    private String filename;
-    private File file;
     private static SAXParserFactory factory;
     private static XMLReader xmlReader;
     private static SAXParser saxParser;
-
-    public void setFilename(String filename) {
-        try {
-            if (!(new File("assets" + FILE_SEPERATOR + filename)).exists()){
-                System.err.println("No");
-            }else {
-                this.filename = "assets" + FILE_SEPERATOR + filename;
-            }
-        }catch (NullPointerException e){
-            e.printStackTrace();
-        }
-    }
 
     public void createSAXParser() {
         factory = SAXParserFactory.newInstance();
@@ -47,9 +33,11 @@ public class CallSAX {
         xmlReader.setErrorHandler(new ConfigErrorHandler());
     }
 
-    public void parseXMLDocument() {
+    public void parseXMLDocument(String filename) {
         try {
-            xmlReader.parse(new File(this.filename).toURI().toURL().toString());
+            String file = new File("./assets" + FILE_SEPERATOR + filename).toURI().toURL().toString();
+            System.out.println(file);
+            xmlReader.parse(file);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {
