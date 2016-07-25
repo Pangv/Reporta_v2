@@ -8,26 +8,17 @@ import de.fi.reporta.xml.CallSAX;
 
 public class ConfigDocument {
 
-    
     private String filename;
     private String delimeter;
     private String doctype;
-
-
-
     
     private Map<Integer, String> attributes = new HashMap<Integer, String>(); // any number of attributes in an input xml
     private CallSAX saxParser;
-    
-    
     
     public void introduceAttributes(Map<Integer, String> attributes){
         // TODO: remove duplicate parser-creation only one is needed
         saxParser = new CallSAX();
         saxParser.createSAXParser();
-
-
-
         saxParser.parseXMLDocument(this.filename);
     }
     

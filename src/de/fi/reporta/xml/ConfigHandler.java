@@ -29,6 +29,10 @@ public class ConfigHandler extends DefaultHandler {
     public Map<Integer, String> getAttributes() {
         return this.attributes;
     }
+    
+    private void addAttributes(int index, String value){
+        this.attributes.put(index, value);
+    }
 
 
 
@@ -53,6 +57,9 @@ public class ConfigHandler extends DefaultHandler {
             if (attributes.getQName(i).equalsIgnoreCase("delimeter")) {
                 this.mainAttributes[1] = attributes.getValue(i);
             }
+            
+            addAttributes(i, attributes.getValue(i));
+            
         }
 
     }

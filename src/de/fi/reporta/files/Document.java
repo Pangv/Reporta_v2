@@ -14,9 +14,7 @@ public class Document {
     private RawDocument rawDocument;
 
     public void buildConfiguration(String filename) {
-
-        configuration = new ConfigDocument(filename);
-
+       configuration = new ConfigDocument(filename);
     }
 
     public void buildRaw() {
