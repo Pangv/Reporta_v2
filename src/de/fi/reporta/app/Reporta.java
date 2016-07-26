@@ -54,8 +54,8 @@ public class Reporta {
         System.out.print("Call the first configuration file: ");
        try {
 
-           doc1.buildConfiguration(br.readLine());
-         //  doc1.buildRaw(br.readLine());
+           doc1.buildConfiguration("strukturA.xml");
+           doc1.buildRaw(br.readLine());
        } catch (IOException e){
            e.printStackTrace();
        }

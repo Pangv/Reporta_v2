@@ -14,6 +14,13 @@ public class RawDocument {
     private String line;
 
 
+    public RawDocument(){
+        // empty
+    }
+    
+    public RawDocument(String filename){
+        this.filename = filename;
+    }
 
 
 
@@ -27,6 +34,8 @@ public class RawDocument {
                 BufferedReader br = new BufferedReader(new FileReader(rawFile));
                 while ((line = br.readLine()) != null) {
                    
+                    
+//                    line = 
                     
                     
                 }

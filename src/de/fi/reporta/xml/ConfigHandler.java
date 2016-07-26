@@ -53,13 +53,13 @@ public class ConfigHandler extends DefaultHandler {
 
             if (attributes.getQName(i).equalsIgnoreCase("type")) {
                 this.mainAttributes[0] = attributes.getValue(i);
-            }
+            }else
             if (attributes.getQName(i).equalsIgnoreCase("delimeter")) {
                 this.mainAttributes[1] = attributes.getValue(i);
-            }
+            }else{
             
             addAttributes(i, attributes.getValue(i));
-            
+            }
         }
 
     }
