@@ -3,9 +3,6 @@ package de.fi.reporta.xml;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
-/**
- * Created by Sven-Oliver Pätzel on 04.07.2016.
- */
 public class ConfigErrorHandler extends DefaultHandler{
 
     public void warning(SAXParseException e){

@@ -4,51 +4,46 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class RawDocument {
 
     private final String FILE_SEPARATOR = File.separator;
     private String filename;
-    private File rawFile;
 
-    private String line;
+    private ArrayList<String> allLines = new ArrayList<String>();
 
+    public RawDocument(){}
 
-    public RawDocument(){
-        // empty
-    }
-    
-    public RawDocument(String filename){
+    RawDocument(String filename){
         this.filename = filename;
+        readRawDocument();
     }
 
 
-
-    public void readRawDocument() {
-        rawFile = new File("assets" + FILE_SEPARATOR + filename);
-
+    /**
+     *
+     */
+    private void readRawDocument() {
+        File rawFile = new File("assets" + FILE_SEPARATOR + filename);
         if (!rawFile.exists()) {
             System.err.println("The file with associated with the name " + filename + " does not exist.");
         } else {
             try {
                 BufferedReader br = new BufferedReader(new FileReader(rawFile));
+                String line;
                 while ((line = br.readLine()) != null) {
-                   
-                    
-//                    line = 
-                    
-                    
+                    System.out.println(line);
+                    allLines.add(line);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
         }
-
     }
 
-    public void setFilename(String filename) {
-        this.filename = "assets" + FILE_SEPARATOR + filename;
+    ArrayList<String> getAllLines(){
+        return allLines;
     }
 
 }

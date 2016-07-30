@@ -2,45 +2,43 @@ package de.fi.reporta.files;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import de.fi.reporta.xml.CallSAX;
-
 
 public class ConfigDocument {
 
     private String filename;
-    private String delimeter;
-    private String doctype;
-    
+
     private Map<Integer, String> attributes = new HashMap<Integer, String>(); // any number of attributes in an input xml
     private CallSAX saxParser;
-    
-    public void introduceAttributes(Map<Integer, String> attributes){
-        // TODO: remove duplicate parser-creation only one is needed
-        saxParser = new CallSAX();
-        saxParser.createSAXParser();
-        saxParser.parseXMLDocument(this.filename);
-    }
-    
-    public ConfigDocument(String filename) {
+
+    ConfigDocument(String filename) {
         this.filename = filename;
         introduceAttributes(this.attributes);
     }
-    
 
-    public String getDelimeter() {
-        return this.delimeter;
-    }
-    
-    public String getDoctype(){
-        return this.doctype;
+    public void introduceAttributes(Map<Integer, String> attributes) {
+        // TODO: remove duplicate parser-creation; only one is needed
+        saxParser = new CallSAX();
+        saxParser.createSAXParser();
+        saxParser.parseXMLDocument(this.filename);
+        saxParser.setAttributes();
+        this.attributes = saxParser.getAttributes();
+
     }
 
-    public void setDelimeter(String delimeter) {
-        this.delimeter = delimeter;
+    String getDoctype(){
+        return saxParser.getConfigHandler().getMainAttributes(0);
     }
-    
-    public void setDoctype(String doctype) {
-        this.doctype = doctype;
+
+    String getDelimiter(){
+        return saxParser.getConfigHandler().getMainAttributes(1);
     }
+
+    Map<Integer, String> getAttributes(){
+        return this.attributes;
+    }
+
 }
+
