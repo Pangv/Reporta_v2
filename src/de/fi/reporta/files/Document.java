@@ -19,7 +19,7 @@ public class Document {
         this.rawDocument = new RawDocument(filename);
     }
 
-    public String getLineFromAllProcessedLine(int line, int index) {
+    public String getItemFromAllProcessedLines(int line, int index) {
         return this.allProcessedLines.get(line)[index];
     }
 

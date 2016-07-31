@@ -6,8 +6,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 class Mapper {
 
@@ -21,36 +20,61 @@ class Mapper {
     private int equalPositionsInLine = 0;
     private int unequalPositionsInLine = 0;
 
-    private Document document1; // Base Document
-    private Document document2; // Second Document
+    private Document documentBase; // Base Document
+    private Document documentScnd; // Second Document
 
     private Map<Integer, Integer> keyPositions = new HashMap<Integer, Integer>();
     private Map<Integer, String> changedLines = new HashMap<Integer, String>();
-    private Map<Integer, String> deletedLines = new HashMap<Integer, String>();
-    private Map<Integer, String> newLines = new HashMap<Integer, String>();
+    private List<String> deletedLines = new ArrayList<String>();
+    private List<String> newLines = new ArrayList<String>();
 
     /**
      * @param documentBase base-document
      * @param documentScnd compared-document
      */
     Mapper(Document documentBase, Document documentScnd) {
-        this.document1 = documentBase;
-        this.document2 = documentScnd;
+        this.documentBase = documentBase;
+        this.documentScnd = documentScnd;
         compareKeyToValuePairs();
 
 
-        int lineCount_base = document1.allProcessedLines.size();
-        int lineCount_scnd = document2.allProcessedLines.size();
+        int lineCountBase = this.documentBase.allProcessedLines.size();
+        int lineCountScnd = this.documentScnd.allProcessedLines.size();
         int size = 0;
 
-        if (lineCount_base != lineCount_scnd) {
-            if (lineCount_base > lineCount_scnd) {
-                deletedLinesCount = lineCount_base - lineCount_scnd;
-                size = lineCount_scnd;
+        if (lineCountBase != lineCountScnd) {
+            if (lineCountBase > lineCountScnd) {
+                deletedLinesCount = lineCountBase - lineCountScnd;
+
+                Collections.reverse(documentBase.allProcessedLines); // reverse
+                String temp = "# ";
+                for (int i = 0; i < deletedLinesCount; i++) {
+                    for (int j = 0; i < documentBase.allProcessedLines.get(i).length; j++) {
+                        temp += trimString(documentBase.allProcessedLines.get(i)[j]);
+                    }
+                    deletedLines.add(temp + LINE_SEPARATOR);
+                    temp = "# "; // reset
+                }
+
+
+                size = lineCountScnd;
+                Collections.reverse(documentBase.allProcessedLines); // reverse back
+
             }
-            if (lineCount_base < lineCount_scnd) {
-                newLinesCount = lineCount_scnd - lineCount_base;
-                size = lineCount_base;
+            if (lineCountBase < lineCountScnd) {
+                newLinesCount = lineCountScnd - lineCountBase;
+
+                Collections.reverse(documentScnd.allProcessedLines);
+                String temp = "# ";
+                for (int i = 0; i < newLinesCount; i++) {
+                    for (int j = 0; j < documentScnd.allProcessedLines.get(i).length; j++) {
+                        temp += trimString(documentScnd.allProcessedLines.get(i)[j]);
+                    }
+                    newLines.add(temp + LINE_SEPARATOR);
+                    temp = "# "; // reset
+                }
+                size = lineCountBase;
+                Collections.reverse(documentScnd.allProcessedLines);
             }
         }
 
@@ -63,11 +87,11 @@ class Mapper {
     }
 
     private void compareKeyToValuePairs() {
-        for (Integer key1 : document1.keyValueStore.keySet()) {
-            for (Integer key2 : document2.keyValueStore.keySet()) {
+        for (Integer key1 : documentBase.keyValueStore.keySet()) {
+            for (Integer key2 : documentScnd.keyValueStore.keySet()) {
 
-                String value_base = document1.keyValueStore.get(key1);
-                String value_scnd = document2.keyValueStore.get(key2);
+                String value_base = documentBase.keyValueStore.get(key1);
+                String value_scnd = documentScnd.keyValueStore.get(key2);
 
                 if (value_base.equals(value_scnd)) {
                     System.out.println("SAME: " + value_base + " = " + value_scnd);
@@ -88,30 +112,65 @@ class Mapper {
 
     private void compareProcessedLines(int line, int positionLineOne, int positionLineTwo) {
 
-        String lineFromAllProcessedLineBase = document1.getLineFromAllProcessedLine(line, positionLineOne).trim();
-        String lineFromAllProcessedLineScnd = document2.getLineFromAllProcessedLine(line, positionLineTwo).trim();
+        String itemFromAllProcessedLinesBase = documentBase.getItemFromAllProcessedLines(line, positionLineOne).trim();
+        String itemFromAllProcessedLinesScnd = documentScnd.getItemFromAllProcessedLines(line, positionLineTwo).trim();
 
         //Handle BOM (Byte Order Marks)
-        lineFromAllProcessedLineBase = lineFromAllProcessedLineBase.replaceAll("[\\uFEFF-\\uFFFF]", "");
-        lineFromAllProcessedLineScnd = lineFromAllProcessedLineScnd.replaceAll("[\\uFEFF-\\uFFFF]", "");
+        itemFromAllProcessedLinesBase = itemFromAllProcessedLinesBase.replaceAll("[\\uFEFF-\\uFFFF]", "");
+        itemFromAllProcessedLinesScnd = itemFromAllProcessedLinesScnd.replaceAll("[\\uFEFF-\\uFFFF]", "");
 
-        if (lineFromAllProcessedLineBase.equals(lineFromAllProcessedLineScnd)) {
-            System.out.println("SAME: " + lineFromAllProcessedLineBase + " = " + lineFromAllProcessedLineScnd);
+        if (itemFromAllProcessedLinesBase.equals(itemFromAllProcessedLinesScnd)) {
+            System.out.println("SAME: " + itemFromAllProcessedLinesBase + " = " + itemFromAllProcessedLinesScnd);
             ++equalPositionsInLine;
-
         } else {
-            System.out.println("DIFFER: " + lineFromAllProcessedLineBase + " = " + lineFromAllProcessedLineScnd);
+            // TODO add the right
+            System.out.println("DIFFER: " + itemFromAllProcessedLinesBase + " = " + itemFromAllProcessedLinesScnd);
             ++unequalPositionsInLine;
 
+            String lineBase = "";
+            for (String strings : documentBase.allProcessedLines.get(line)) {
+                lineBase += trimString(strings);
+            }
+            String lineScnd = "";
+            for (String strings : documentScnd.allProcessedLines.get(line)) {
+                lineScnd += trimString(strings);
+            }
+            changedLines.put(line, "# " + lineBase + "!=" + lineScnd + LINE_SEPARATOR);
         }
 
-        if (equalPositionsInLine == document1.keyValueStore.size()) {
+        if (equalPositionsInLine == documentBase.keyValueStore.size()) {
+            System.out.println("Equal Line");
             identicalLinesCount++;
             equalPositionsInLine = 0; //reset
+            unequalPositionsInLine = 0; // reset
+        } else if ((equalPositionsInLine + unequalPositionsInLine) == documentBase.keyValueStore.size()) {
+            System.out.println("Unequal Line");
+            changedLinesCount++;
+            equalPositionsInLine = 0;
+            unequalPositionsInLine = 0;
         }
-
-
     }
+
+    private String trimString(String strings) {
+        return strings.trim().replaceAll("[\\uFEFF-\\uFFFF]", "") + " ";
+    }
+
+    private String stripStrings(Map<Integer, String> values) {
+        String toReturn = "";
+        for (String string : values.values()) {
+            toReturn += string;
+        }
+        return toReturn;
+    }
+
+    private String stripStrings(List<String> values) {
+        String toReturn = "";
+        for (String string : values) {
+            toReturn += string;
+        }
+        return toReturn;
+    }
+
 
     /**
      * Generates the corresponding output
@@ -126,13 +185,21 @@ class Mapper {
             FileWriter fileWriter = new FileWriter(output.getAbsoluteFile());
             bufferedWriter = new BufferedWriter(fileWriter);
             String content =
-                    "Anzahl Zeilen [Base:\t" + document1.rawDocument.getFilename() + "]: " + document1.allProcessedLines.size() + LINE_SEPARATOR
-                            + "Anzahl Zeilen [Secondary:\t" + document2.rawDocument.getFilename() + "]: " + document2.allProcessedLines.size() + LINE_SEPARATOR
+                    "#Anzahl Zeilen [Base:\t\t" + documentBase.rawDocument.getFilename() + "]: " + documentBase.allProcessedLines.size() + LINE_SEPARATOR
+                            + "#Anzahl Zeilen [Secondary:\t" + documentScnd.rawDocument.getFilename() + "]: " + documentScnd.allProcessedLines.size() + LINE_SEPARATOR
                             + "####################################" + LINE_SEPARATOR
-                            + "Identische Zeilen: " + this.identicalLinesCount + LINE_SEPARATOR
-                            + "Gelöschte Zeilen: " + this.deletedLinesCount + LINE_SEPARATOR
-                            + "Geänderte Zeilen: " + this.changedLinesCount + LINE_SEPARATOR
-                            + "Neue Zeilen: " + this.newLinesCount + LINE_SEPARATOR;
+                            + "# Identische Zeilen: " + this.identicalLinesCount + LINE_SEPARATOR
+                            + "# Geänderte Zeilen: " + this.changedLinesCount + LINE_SEPARATOR
+                            + "# ++++++++++++++++++++++++++++++++++++" + LINE_SEPARATOR
+                            + stripStrings(changedLines) + LINE_SEPARATOR
+                            + "# Gelöschte Zeilen: " + this.deletedLinesCount + " in [Base:\t\t" + documentBase.rawDocument.getFilename() + "]" + LINE_SEPARATOR
+                            + "# ++++++++++++++++++++++++++++++++++++" + LINE_SEPARATOR
+                            + stripStrings(deletedLines) + LINE_SEPARATOR
+                            + "# ++++++++++++++++++++++++++++++++++++" + LINE_SEPARATOR
+                            + "# Neue Zeilen: " + this.newLinesCount + " in [Secondary:\t" + documentScnd.rawDocument.getFilename() + "]" + LINE_SEPARATOR
+                            + "# ++++++++++++++++++++++++++++++++++++" + LINE_SEPARATOR
+                            + stripStrings(newLines) + LINE_SEPARATOR
+                            + "# ++++++++++++++++++++++++++++++++++++" + LINE_SEPARATOR;
             bufferedWriter.write(content);
             bufferedWriter.close();
         } catch (IOException e) {
