@@ -1,10 +1,9 @@
 package de.fi.reporta.files;
 
+import de.fi.reporta.xml.CallSAX;
+
 import java.util.HashMap;
 import java.util.Map;
-import java.util.StringTokenizer;
-
-import de.fi.reporta.xml.CallSAX;
 
 public class ConfigDocument {
 
@@ -28,15 +27,15 @@ public class ConfigDocument {
 
     }
 
-    String getDoctype(){
+    String getDoctype() {
         return saxParser.getConfigHandler().getMainAttributes(0);
     }
 
-    String getDelimiter(){
+    String getDelimiter() {
         return saxParser.getConfigHandler().getMainAttributes(1);
     }
 
-    Map<Integer, String> getAttributes(){
+    Map<Integer, String> getAttributes() {
         return this.attributes;
     }
 

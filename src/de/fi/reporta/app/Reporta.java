@@ -3,8 +3,8 @@ package de.fi.reporta.app;
 import de.fi.reporta.files.Document;
 
 import javax.swing.*;
-import java.io.*;
-import java.net.MalformedURLException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 /**
  *
@@ -31,26 +31,13 @@ public class Reporta {
             start_wo_gui();
         } else if (GUI) {
             System.out.println("Start with user interface");
-            start_w_gui();
+            // TODO: add GUI implementation
         } else {
             System.out.println("Start without user interface");
             start_wo_gui();
         }
 
 
-    }
-
-    /**
-     * Launch Application with FileChooser
-     */
-    private static void start_w_gui() {
-        jFileChooser.showOpenDialog(null);
-        jFileChooser.setCurrentDirectory(new File(DEFAULT_LOCATION));
-        try {
-            String filename = jFileChooser.getSelectedFile().toURI().toURL().toString();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
     }
 
     /**
@@ -63,13 +50,16 @@ public class Reporta {
         doc1.buildConfiguration("strukturA.xml");
         doc1.buildRaw("inputA.txt");
         doc1.processDocument();
-
+        doc1.fillKeyValueStore();
 
         System.out.println("Call the second configuration file: ");
         doc2.buildConfiguration("strukturB.xml");
         doc2.buildRaw("inputB.txt");
         doc2.processDocument();
+        doc2.fillKeyValueStore();
 
+        Mapper mapper = new Mapper(doc1, doc2);
+        mapper.generateOutputDocument();
 
     }
 

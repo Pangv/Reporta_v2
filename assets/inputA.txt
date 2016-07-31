@@ -1,4 +1,4 @@
-﻿user1;Donald;Duck;männlich;
+user1;Donald;Duck;männlich;
 user2;Daisy;Duck;weiblich;
 user3;Tick;Duck;männlich;
 user4;Trick;Duck;männlich;

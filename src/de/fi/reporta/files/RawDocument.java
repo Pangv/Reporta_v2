@@ -13,9 +13,10 @@ public class RawDocument {
 
     private ArrayList<String> allLines = new ArrayList<String>();
 
-    public RawDocument(){}
+    public RawDocument() {
+    }
 
-    RawDocument(String filename){
+    RawDocument(String filename) {
         this.filename = filename;
         readRawDocument();
     }
@@ -42,8 +43,12 @@ public class RawDocument {
         }
     }
 
-    ArrayList<String> getAllLines(){
+    ArrayList<String> getAllLines() {
         return allLines;
     }
 
+
+    public String getFilename() {
+        return this.filename;
+    }
 }

@@ -8,7 +8,6 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 import java.io.File;
 import java.io.IOException;
-import java.net.InterfaceAddress;
 import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;

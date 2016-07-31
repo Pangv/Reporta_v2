@@ -1,12 +1,12 @@
 package de.fi.reporta.xml;
 
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ConfigHandler extends DefaultHandler {
 
@@ -17,7 +17,8 @@ public class ConfigHandler extends DefaultHandler {
     private Map<Integer, String> secondaryAttributes = new HashMap<Integer, String>();
 
     @SuppressWarnings("unused")
-    public ConfigHandler() {}
+    public ConfigHandler() {
+    }
 
     ConfigHandler(Map<Integer, String> attributes) {
         this.secondaryAttributes = attributes;
@@ -69,6 +70,7 @@ public class ConfigHandler extends DefaultHandler {
         }
 
     }
+
     public void characters(char[] chars, int start, int length) throws SAXException {
         String charString = new String(chars, start, length);
         charString = charString.replaceAll("\n", "[cr]");

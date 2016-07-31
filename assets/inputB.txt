@@ -3,3 +3,5 @@ Daisy#Duck#user2#weiblich#
 Tick#Duck#user3#männlich#
 Track#Ente#user5#männlich#
 Duffy#Duck#user6#männlich#
+Duffy#Duck#user7#männlich#
+Duffy#Duck#user8#männlich#
